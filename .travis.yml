@@ -14,5 +14,5 @@ matrix:
 install:
 - pip install -r requirements.txt
 - pip install nose
-- pip install flake9
+- pip install flake8
 script: nosetests
