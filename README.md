@@ -1,4 +1,5 @@
 # Backend
+[![Build Status](https://travis-ci.org/bfh-proj1-sumfrie/backend.svg?branch=master)](https://travis-ci.org/bfh-proj1-sumfrie/backend)
 
 This project is the backend API used for our project 1 at the BFH.
 It acts as a proxy for querying a MariaDB.
