@@ -15,4 +15,4 @@ install:
 - pip install -r requirements.txt
 - pip install nose
 - pip install flake8
-script: nosetests
+script: nosetests && flake8 src api.py test
