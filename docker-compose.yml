@@ -2,7 +2,37 @@ version: '2'
 services:
     web:
         build: .
+        environment:
+            - DB_PASSWORD=unsafe
+            - DB_USERNAME=root
+            - DB_HOST=backend-db
+            - DB_PORT=3306
+            - DB_DATABASE=docker
+            - DB_CHARSET=utf8
+        networks:
+            - backend
         ports:
             - "5000:5000"
         volumes:
             - .:/code
+        depends_on:
+            - db
+    db:
+        restart: always
+        image: mariadb
+        container_name: backend-db
+        volumes:
+            - ./sql/test-data.sql:/docker-entrypoint-initdb.d/test-data.sql
+        networks:
+            - backend
+        environment:
+            - MYSQL_USER=docker
+            - MYSQL_PASSWORD=docker
+            - MYSQL_DATABASE=docker
+            - MYSQL_ROOT_PASSWORD=unsafe
+        ports:
+            - 3306:3306
+
+networks:
+    backend:
+        driver: bridge

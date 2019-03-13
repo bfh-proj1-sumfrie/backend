@@ -1,5 +1,10 @@
-from flask import Flask
+import datetime
+import decimal
 from flask_restful import Resource, Api
+from flask import Flask, json
+from sqlalchemy import text
+from sqlalchemy.exc import SQLAlchemyError
+from api.database import engine
 
 
 def create_api():
@@ -8,8 +13,23 @@ def create_api():
 
     class QueryResource(Resource):
         def get(self, sql):
-            return {"test": sql}
+            sql = text(sql)
+            try:
+                db_response = engine.execute(sql)
+            except SQLAlchemyError as err:
+                return json.jsonify({"error": str(err)})
+
+            data = json.dumps([dict(r) for r in db_response], default=alchemy_encoder)
+            return data
 
     api.add_resource(QueryResource, '/query/<string:sql>')
 
+    # JSON encoder function for SQLAlchemy special classes
+    def alchemy_encoder(obj):
+        if isinstance(obj, datetime.date):
+            return obj.isoformat()
+        elif isinstance(obj, decimal.Decimal):
+            return float(obj)
+
     return app
+
