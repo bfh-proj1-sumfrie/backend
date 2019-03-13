@@ -1,11 +1,11 @@
-from app import api
+from api import create_api
 import unittest
 
 
 class QueryTestCase(unittest.TestCase):
 
     def setUp(self):
-        app = api.create_api()
+        app = create_api()
         app.testing = True
         self.app = app.test_client()
 
