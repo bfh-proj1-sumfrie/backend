@@ -29,6 +29,9 @@ It acts as a proxy for querying a MariaDB.
 If you need to rebuild e.g. after adding new dependencies run `docker-compose up --build` 
 to trigger a container rebuild
 
+When building the containers the database will automatically be populated with test data.
+
+
 ## CI/CD
 This project is automatically tested and linted on Travis CI.
 It uses flake8 for linting. To run the linting process install flake8 and run it as follows:

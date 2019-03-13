@@ -19,8 +19,7 @@ def create_api():
             except SQLAlchemyError as err:
                 return json.jsonify({"error": str(err)})
 
-            data = json.dumps([dict(r) for r in db_response], default=alchemy_encoder)
-            return data
+            return [dict(r) for r in db_response]
 
     api.add_resource(QueryResource, '/query/<string:sql>')
 
