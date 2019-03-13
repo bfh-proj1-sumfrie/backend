@@ -22,7 +22,7 @@ services:
         image: mariadb
         container_name: backend-db
         volumes:
-            - ./sql/test-data.sql:/docker-entrypoint-initdb.d/test-data.sql
+            - ./sql/test-dump.sql:/docker-entrypoint-initdb.d/test-dump.sql
         networks:
             - backend
         environment:

@@ -10,7 +10,7 @@ It acts as a proxy for querying a MariaDB.
 1) clone this repository
 3) Change to your virtual env
 4) Install dependencies: `pip install -r requirements.txt`
-5) Configuration:
+5) Database Configuration (Sql)
  The following environment variables must be set:
  ```bash 
     DB_USERNAME # the db username
@@ -24,7 +24,7 @@ It acts as a proxy for querying a MariaDB.
 
 ### Docker Compose Setup (preferred)
 1) Start it: `docker-compose up`
-2) open localhost:5000
+2) open `localhost:5000`
 
 If you need to rebuild e.g. after adding new dependencies run `docker-compose up --build` 
 to trigger a container rebuild
