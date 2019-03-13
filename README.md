@@ -6,9 +6,16 @@ It acts as a proxy for querying a MariaDB.
 
 ## Up and Running
 
+### Manual Setup
 1) clone this repository
-2) Install dependencies: `pip install -r requirements.txt`
-3) Run it: `python api.py`
+3) Change to your virtual env
+4) Install dependencies: `pip install -r requirements.txt`
+5) Run it: `python main.py`
+
+### Docker Compose Setup (preferred)
+1) `docker-compose up`
+2) Start it: `docker-compose up`
+3) open localhost:5000
 
 ## CI/CD
 This project is automatically tested and linted on Travis CI.
