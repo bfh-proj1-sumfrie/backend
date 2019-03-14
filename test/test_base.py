@@ -14,7 +14,7 @@ class QueryTestCase(unittest.TestCase):
     def test_init(self):
         request = self.app.get('/query/select * from block limit 2')
         assert request.status_code == 200
-        data = json.loads(request.data)
+        data = json.loads(request.data.decode('utf-8'))
         assert data[0]["id"] == 1
         assert data[0]["block_hash"] == "b'AAAAALhz55eEZHpsgpYscNIoVX0kp0fqTRuLvoeOEgY='"
         assert data[0]["difficulty"] == 1.0
