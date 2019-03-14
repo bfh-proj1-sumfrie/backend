@@ -46,3 +46,6 @@ and then trigger the tests: `nosetests`.
 
 Since only reading queries are allowed, we don't need to revert the db
 on every test.
+
+If you want to know the test coverage: `nosetests --with-cov --cov api/ test/`
+You need to have the package nose-cov installed `pip install nose-cov`

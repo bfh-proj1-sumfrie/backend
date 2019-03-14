@@ -25,4 +25,5 @@ install:
 - pip install -r requirements.txt
 - pip install nose
 - pip install flake8
-script: nosetests && flake8 src main.py test
+- pip install nose-cov
+script: nosetests --with-cov --cov api/ test/ && flake8 src main.py test
