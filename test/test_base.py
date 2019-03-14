@@ -13,6 +13,7 @@ class QueryTestCase(unittest.TestCase):
 
     def test_simple_query(self):
         request = self.app.get('/query/select * from block limit 2')
+        assert request.headers['Content-Type'] == 'application/json'
         assert request.status_code == 200
         data = json.loads(request.data.decode('utf-8'))
         assert data[0]["id"] == 1
