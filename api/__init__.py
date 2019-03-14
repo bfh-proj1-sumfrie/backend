@@ -15,8 +15,8 @@ def create_api(is_test=False):
 
     if is_test:
         app.config['TESTING'] = True
-
     app.config['SQLALCHEMY_DATABASE_URI'] = get_db_connection_uri(is_test)
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db = SQLAlchemy(app)
 
     app_dict['app'] = app

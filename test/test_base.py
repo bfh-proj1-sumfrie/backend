@@ -11,7 +11,7 @@ class QueryTestCase(unittest.TestCase):
         create_api(True)
         self.app = app_dict['app'].test_client()
 
-    def test_init(self):
+    def test_simple_query(self):
         request = self.app.get('/query/select * from block limit 2')
         assert request.status_code == 200
         data = json.loads(request.data.decode('utf-8'))
