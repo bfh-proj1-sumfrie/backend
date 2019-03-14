@@ -49,3 +49,6 @@ on every test.
 
 If you want to know the test coverage: `nosetests --with-cov --cov api/ test/`
 You need to have the package nose-cov installed `pip install nose-cov`
+
+## Versioning
+Tagging MUST follow [semantic versioning](https://semver.org/).
