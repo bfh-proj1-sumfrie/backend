@@ -6,8 +6,6 @@ from api.encoder import alchemy_encoder
 from flask_sqlalchemy import SQLAlchemy
 from api.database import get_db_connection_uri
 
-app_dict = {}
-
 
 def create_api(is_test=False):
     app = Flask(__name__)
@@ -18,9 +16,6 @@ def create_api(is_test=False):
     app.config['SQLALCHEMY_DATABASE_URI'] = get_db_connection_uri(is_test)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db = SQLAlchemy(app)
-
-    app_dict['app'] = app
-    app_dict['db'] = db
 
     class QueryResource(Resource):
         def get(self, sql):

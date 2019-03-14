@@ -41,7 +41,7 @@ To run the tests install `pip install nose` and run `nosetests`.
 
 ## Testing
 
-The test need to run against an sql. To run them, start the docker environment
+The test need to run against an sql database. To run them, start the docker environment
 and then trigger the tests: `nosetests`.
 
 Since only reading queries are allowed, we don't need to revert the db
@@ -49,3 +49,6 @@ on every test.
 
 If you want to know the test coverage: `nosetests --with-cov --cov api/ test/`
 You need to have the package nose-cov installed `pip install nose-cov`
+
+## Versioning
+Tagging MUST follow [semantic versioning](https://semver.org/).
