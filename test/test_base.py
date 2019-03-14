@@ -1,17 +1,19 @@
-from api import create_api
 import unittest
+from api import create_api, app_dict
 
 
 class QueryTestCase(unittest.TestCase):
 
+    # we don't need to restore the db on each test, since we only allow read access...
     def setUp(self):
-        app = create_api()
-        app.testing = True
-        self.app = app.test_client()
+        create_api(True)
+        self.app = app_dict['app'].test_client()
 
     def test_init(self):
-        rv = self.app.get('/query/test')
-        assert b'test' in rv.data
+        rv = self.app.get('/query/select * from block limit 1')
+        assert b'486604799' in rv.data
+        assert b'"difficulty": 1.0' in rv.data
+        assert b'"id": 1' in rv.data
 
 
 if __name__ == '__main__':
