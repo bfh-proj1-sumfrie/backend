@@ -35,6 +35,14 @@ class QueryTestCase(unittest.TestCase):
         data = json.loads(request.data.decode('utf-8'))
         self.assertIn("You have an error in your SQL syntax;", data['error'])
 
+    def test_encoder(self):
+        request = self.app.get('/query/select * from vout limit 1')
+        assert request.headers['Content-Type'] == 'application/json'
+        assert request.status_code == 200
+        data = json.loads(request.data.decode('utf-8'))
+        assert data[0]["txid"] == 1
+        assert data[0]["value"] == 50
+
 
 if __name__ == '__main__':
     unittest.main()
