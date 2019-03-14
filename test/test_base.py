@@ -35,5 +35,6 @@ class QueryTestCase(unittest.TestCase):
         data = json.loads(request.data.decode('utf-8'))
         self.assertIn("You have an error in your SQL syntax;", data['error'])
 
+
 if __name__ == '__main__':
     unittest.main()
