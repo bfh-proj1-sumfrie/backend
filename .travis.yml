@@ -14,12 +14,11 @@ matrix:
 services:
   - mysql
 before_install:
-  - mysql -u root --password="" < sql/test-dump.sql
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
+  - mysql -u root --password="" --default-character-set=utf8 test < sql/test-dump.sql
 env:
-  global: 
-    - DB_HOST="127.0.0.1" DB_PASSWORD="" DB_USERNAME="root" DB_DATABASE=""
-  matrix:
-    - DB_HOST="127.0.0.1" DB_PASSWORD="" DB_USERNAME="root" DB_DATABASE=""
+  global:
+    - DB_HOST="127.0.0.1" DB_PASSWORD="" DB_USERNAME="root" DB_DATABASE="test"
 install:
 - pip install -r requirements.txt
 - pip install nose
