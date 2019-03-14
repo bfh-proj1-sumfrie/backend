@@ -38,3 +38,11 @@ It uses flake8 for linting. To run the linting process install flake8 and run it
 `flake8 src api.py test` from the root directory.
 
 To run the tests install `pip install nose` and run `nosetests`.
+
+## Testing
+
+The test need to run against an sql. To run them, start the docker environment
+and then trigger the tests: `nosetests`.
+
+Since only reading queries are allowed, we don't need to revert the db
+on every test.
