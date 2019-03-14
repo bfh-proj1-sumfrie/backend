@@ -8,7 +8,7 @@ It acts as a proxy for querying a MariaDB.
 ## Up and Running
 
 ### Manual Setup
-1) clone this repository
+1) Clone this repository
 3) Change to your virtual env
 4) Install dependencies: `pip install -r requirements.txt`
 5) Database Configuration (Sql)
@@ -17,7 +17,6 @@ It acts as a proxy for querying a MariaDB.
     DB_USERNAME # the db username
     DB_PASSWORD # db password of the user
     DB_HOST # the host where the db is running
-    DB_PORT # the port on the host (usually 3306)
     DB_DATABASE # the name of the database
     DB_CHARSET # the charset (utf8 in our case)
  ```

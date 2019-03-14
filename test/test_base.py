@@ -28,6 +28,12 @@ class QueryTestCase(unittest.TestCase):
 
         assert data[1]["id"] == 2
 
+    def test_simple_error(self):
+        request = self.app.get('/query/select')
+        assert request.headers['Content-Type'] == 'application/json'
+        assert request.status_code == 200
+        data = json.loads(request.data.decode('utf-8'))
+        self.assertIn("You have an error in your SQL syntax;", data['error'])
 
 if __name__ == '__main__':
     unittest.main()
