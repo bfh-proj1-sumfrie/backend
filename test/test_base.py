@@ -1,4 +1,5 @@
 import unittest
+import json
 from api import create_api, app_dict
 
 
@@ -10,10 +11,20 @@ class QueryTestCase(unittest.TestCase):
         self.app = app_dict['app'].test_client()
 
     def test_init(self):
-        rv = self.app.get('/query/select * from block limit 1')
-        assert b'486604799' in rv.data
-        assert b'"difficulty": 1.0' in rv.data
-        assert b'"id": 1' in rv.data
+        request = self.app.get('/query/select * from block limit 2')
+        assert request.status_code == 200
+        data = json.loads(request.data)
+        assert data[0]["id"] == 1
+        assert data[0]["block_hash"] == "b'AAAAALhz55eEZHpsgpYscNIoVX0kp0fqTRuLvoeOEgY='"
+        assert data[0]["difficulty"] == 1.0
+        assert data[0]["height"] == 1
+        assert data[0]["nonce"] == 1924588547
+        assert data[0]["size"] == 190
+        assert data[0]["version"] == 1
+        assert data[0]["time"] == "2011-02-03T00:22:08"
+        assert data[0]["merkleroot"] == "b'8DFf/DhwnXCtVkfiIEg1jdN0Xzzjh0IjyAp8kvqwyLo='"
+
+        assert data[1]["id"] == 2
 
 
 if __name__ == '__main__':
