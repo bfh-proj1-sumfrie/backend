@@ -16,10 +16,10 @@ services:
 before_install:
   - mysql -u root --password="" < sql/test-dump.sql
 env:
-  - DB_HOST="127.0.0.1"
-  - DB_PASSWORD=""
-  - DB_USERNAME="root"
-  - DB_DATABASE=""
+  global: 
+    - DB_HOST="127.0.0.1" DB_PASSWORD="" DB_USERNAME="root" DB_DATABASE=""
+  matrix:
+    - DB_HOST="127.0.0.1" DB_PASSWORD="" DB_USERNAME="root" DB_DATABASE=""
 install:
 - pip install -r requirements.txt
 - pip install nose
