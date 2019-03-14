@@ -5,7 +5,8 @@ from api import create_api, app_dict
 
 class QueryTestCase(unittest.TestCase):
 
-    # we don't need to restore the db on each test, since we only allow read access...
+    # we don't need to restore the db on each test,
+    # since we only allow read access...
     def setUp(self):
         create_api(True)
         self.app = app_dict['app'].test_client()
