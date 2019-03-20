@@ -1,4 +1,4 @@
-from flask_restful import Resource, Api
+from flask_restful import Resource, Api, reqparse
 from flask import Flask, json, make_response
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
@@ -18,8 +18,12 @@ def create_api(is_test=False):
     db = SQLAlchemy(app)
 
     class QueryResource(Resource):
-        def get(self, sql):
-            sql = text(sql)
+        def post(self):
+            parser = reqparse.RequestParser()
+            parser.add_argument('sql', type=str, help='sql is no valid string')
+            args = parser.parse_args()
+
+            sql = text(args['sql'])
             try:
                 db_response = db.engine.execute(sql)
             except SQLAlchemyError as err:
@@ -30,7 +34,7 @@ def create_api(is_test=False):
             response.mimetype = 'application/json'
             return response
 
-    api.add_resource(QueryResource, '/query/<string:sql>')
+    api.add_resource(QueryResource, '/query')
 
     return app
 
