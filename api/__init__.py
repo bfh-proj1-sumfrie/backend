@@ -18,6 +18,9 @@ def create_api(is_test=False):
     db = SQLAlchemy(app)
 
     class QueryResource(Resource):
+        # use post because there is no limit in sql length (get has a length limit of ca. 2000 chars)
+        # and its easier in case of special chars
+        # this is actually not fully HTTP compliant
         def post(self):
             parser = reqparse.RequestParser()
             parser.add_argument('sql', type=str, help='sql is no valid string')
