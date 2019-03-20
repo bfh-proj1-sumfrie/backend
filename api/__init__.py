@@ -18,7 +18,8 @@ def create_api(is_test=False):
     db = SQLAlchemy(app)
 
     class QueryResource(Resource):
-        # use post because there is no limit in sql length (get has a length limit of ca. 2000 chars)
+        # use post because there is no limit in sql length
+        # (get has a length limit of ca. 2000 chars)
         # and its easier in case of special chars
         # this is actually not fully HTTP compliant
         def post(self):
@@ -40,4 +41,3 @@ def create_api(is_test=False):
     api.add_resource(QueryResource, '/query')
 
     return app
-
