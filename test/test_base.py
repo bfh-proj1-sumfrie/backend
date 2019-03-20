@@ -12,7 +12,7 @@ class QueryTestCase(unittest.TestCase):
         self.app = app.test_client()
 
     def test_simple_query(self):
-        request = self.app.get('/query/select * from block limit 2')
+        request = self.app.post('/query', data='{"sql": "select * from block limit 2"}', headers={'content-type': 'application/json'})
         assert request.headers['Content-Type'] == 'application/json'
         assert request.status_code == 200
         data = json.loads(request.data.decode('utf-8'))
@@ -29,14 +29,16 @@ class QueryTestCase(unittest.TestCase):
         assert data[1]["id"] == 2
 
     def test_simple_error(self):
-        request = self.app.get('/query/select')
+        request = self.app.post('/query', data='{"sql": "select"}',
+                                headers={'content-type': 'application/json'})
+
         assert request.headers['Content-Type'] == 'application/json'
         assert request.status_code == 200
         data = json.loads(request.data.decode('utf-8'))
         self.assertIn("You have an error in your SQL syntax;", data['error'])
 
     def test_encoder(self):
-        request = self.app.get('/query/select * from vout limit 1')
+        request = self.app.post('/query', data='{"sql": "select * from vout limit 1"}', headers={'content-type': 'application/json'})
         assert request.headers['Content-Type'] == 'application/json'
         assert request.status_code == 200
         data = json.loads(request.data.decode('utf-8'))
