@@ -2,6 +2,8 @@
 [![Build Status](https://travis-ci.org/bfh-proj1-sumfrie/backend.svg?branch=master)](https://travis-ci.org/bfh-proj1-sumfrie/backend)
 [![Coverage Status](https://coveralls.io/repos/github/bfh-proj1-sumfrie/backend/badge.svg?branch=master)](https://coveralls.io/github/bfh-proj1-sumfrie/backend?branch=master)
 [![Maintainability](https://api.codeclimate.com/v1/badges/9f9264ad8861e1227d26/maintainability)](https://codeclimate.com/github/bfh-proj1-sumfrie/backend/maintainability)
+[![Updates](https://pyup.io/repos/github/bfh-proj1-sumfrie/backend/shield.svg)](https://pyup.io/repos/github/bfh-proj1-sumfrie/backend/)
+[![Python 3](https://pyup.io/repos/github/bfh-proj1-sumfrie/backend/python-3-shield.svg)](https://pyup.io/repos/github/bfh-proj1-sumfrie/backend/)
 
 This project is the backend API used for our project 1 at the BFH.
 It acts as a proxy for querying a MariaDB.
