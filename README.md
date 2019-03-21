@@ -1,6 +1,10 @@
 # Backend
 [![Build Status](https://travis-ci.org/bfh-proj1-sumfrie/backend.svg?branch=master)](https://travis-ci.org/bfh-proj1-sumfrie/backend)
 [![Coverage Status](https://coveralls.io/repos/github/bfh-proj1-sumfrie/backend/badge.svg?branch=master)](https://coveralls.io/github/bfh-proj1-sumfrie/backend?branch=master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/9f9264ad8861e1227d26/maintainability)](https://codeclimate.com/github/bfh-proj1-sumfrie/backend/maintainability)
+[![Updates](https://pyup.io/repos/github/bfh-proj1-sumfrie/backend/shield.svg)](https://pyup.io/repos/github/bfh-proj1-sumfrie/backend/)
+[![Python 3](https://pyup.io/repos/github/bfh-proj1-sumfrie/backend/python-3-shield.svg)](https://pyup.io/repos/github/bfh-proj1-sumfrie/backend/)
+![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/bfh-proj1-sumfrie/backend.svg)
 
 This project is the backend API used for our project 1 at the BFH.
 It acts as a proxy for querying a MariaDB.
@@ -19,6 +23,7 @@ It acts as a proxy for querying a MariaDB.
     DB_HOST # the host where the db is running
     DB_DATABASE # the name of the database
     DB_CHARSET # the charset (utf8 in our case)
+    API_HOST # e.g. https://myhost.com
  ```
 6) Run it: `python main.py`
 
@@ -31,6 +36,15 @@ to trigger a container rebuild
 
 When building the containers the database will automatically be populated with test data.
 
+### Swagger API Docs
+You can find the API Docs here: `http://localhost:5000/api/swagger.json`.
+If you deploy make sur to set the `API_HOST` env variable.
+If you want to test it using an a swagger interface go to: https://inspector.swagger.io
+
+and use the your swagger link where you host this software `http://myhost.com/api/swagger.json` 
+
+If you are developing make sure to allow CORS request, so you can use `http://127.0.0.1:5000/api/swagger.json`
+in the swagger inspector.
 
 ## CI/CD
 This project is automatically tested and linted on Travis CI.
