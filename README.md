@@ -4,6 +4,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/9f9264ad8861e1227d26/maintainability)](https://codeclimate.com/github/bfh-proj1-sumfrie/backend/maintainability)
 [![Updates](https://pyup.io/repos/github/bfh-proj1-sumfrie/backend/shield.svg)](https://pyup.io/repos/github/bfh-proj1-sumfrie/backend/)
 [![Python 3](https://pyup.io/repos/github/bfh-proj1-sumfrie/backend/python-3-shield.svg)](https://pyup.io/repos/github/bfh-proj1-sumfrie/backend/)
+![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/bfh-proj1-sumfrie/backend.svg)
 
 This project is the backend API used for our project 1 at the BFH.
 It acts as a proxy for querying a MariaDB.
