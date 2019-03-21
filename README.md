@@ -19,6 +19,7 @@ It acts as a proxy for querying a MariaDB.
     DB_HOST # the host where the db is running
     DB_DATABASE # the name of the database
     DB_CHARSET # the charset (utf8 in our case)
+    API_HOST # e.g. https://myhost.com
  ```
 6) Run it: `python main.py`
 
@@ -33,7 +34,7 @@ When building the containers the database will automatically be populated with t
 
 ### Swagger API Docs
 You can find the API Docs here: `http://localhost:5000/api/swagger.json`.
-
+If you deploy make sur to set the `API_HOST` env variable.
 If you want to test it using an a swagger interface go to: https://inspector.swagger.io
 
 and use the your swagger link where you host this software `http://myhost.com/api/swagger.json` 
