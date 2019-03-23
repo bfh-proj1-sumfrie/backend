@@ -6,6 +6,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from api.encoder import alchemy_encoder
 from flask_sqlalchemy import SQLAlchemy
 from api.database import get_db_connection_uri
+from api.sql_validator import validate_sql
 from flask_restful_swagger_2 import Api, swagger, Schema
 
 
@@ -94,10 +95,10 @@ def create_api(is_test=False):
             parser = reqparse.RequestParser()
             parser.add_argument('sql', type=str, required=True, help='sql is not valid string or not present')
             args = parser.parse_args()
+            sql = validate_sql(args['sql'])
 
-            sql = text(args['sql'])
             try:
-                db_response = db.engine.execute(sql)
+                db_response = db.engine.execute(text(sql))
             except SQLAlchemyError as err:
                 return json.jsonify({"error": str(err)})
 
