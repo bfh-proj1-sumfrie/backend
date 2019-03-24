@@ -42,6 +42,17 @@ class QueryTestCase(unittest.TestCase):
         data = json.loads(request.data.decode('utf-8'))
         self.assertIn("You have an error in your SQL syntax;", data['error'])
 
+    def test_request_error(self):
+        request = self.app.post('/query',
+                                data='{}',
+                                headers={'content-type': 'application/json'}
+                                )
+
+        assert request.headers['Content-Type'] == 'application/json'
+        assert request.status_code == 400
+        data = json.loads(request.data.decode('utf-8'))
+        assert data['message']["sql"] == "sql is not valid string or not present"
+
     def test_encoder(self):
         request = self.app.post('/query',
                                 data='{"sql": "select * from vout limit 1"}',
