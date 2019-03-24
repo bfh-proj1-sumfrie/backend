@@ -7,11 +7,13 @@ from api.encoder import alchemy_encoder
 from flask_sqlalchemy import SQLAlchemy
 from api.database import get_db_connection_uri
 from flask_restful_swagger_2 import Api, swagger, Schema
+from flask_cors import CORS
 
 
 def create_api(is_test=False):
     app = Flask(__name__)
     api = Api(app, api_version='0.1', api_spec_url='/api/swagger', host=os.environ.get('API_HOST', 'localhost:5000'))
+    CORS(app, resources={r"/*": {"origins": "*"}})
 
     if is_test:
         app.config['TESTING'] = True
@@ -103,7 +105,6 @@ def create_api(is_test=False):
             data = json.dumps([dict(r) for r in db_response], default=alchemy_encoder)
             response = make_response(data)
             response.mimetype = 'application/json'
-            response.headers['Access-Control-Allow-Origin'] = '*'
 
             return response
 
