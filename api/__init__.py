@@ -103,6 +103,8 @@ def create_api(is_test=False):
             data = json.dumps([dict(r) for r in db_response], default=alchemy_encoder)
             response = make_response(data)
             response.mimetype = 'application/json'
+            response.headers['Access-Control-Allow-Origin'] = '*'
+
             return response
 
     api.add_resource(QueryResource, '/query')
