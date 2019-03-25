@@ -3,7 +3,8 @@ import os
 from flask_restful import abort
 
 
-def paginate_query(sql, pagesize=os.environ.get('LIMIT_MAX_SIZE', 10)):
+def paginate_query(sql):
+    pagesize = int(os.environ.get('LIMIT_MAX_SIZE', '10'))
     sql = sql.lower().strip()
     # paginate selects only!
     if sql[:6] == 'select':
@@ -15,7 +16,7 @@ def paginate_query(sql, pagesize=os.environ.get('LIMIT_MAX_SIZE', 10)):
                 abort(400, error="LIMIT's cannot be greater than " + str(pagesize))
 
         else:
-            sql += ' limit 10'
+            sql += ' limit ' + str(pagesize)
 
     return sql
 
