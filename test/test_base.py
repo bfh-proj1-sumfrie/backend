@@ -114,7 +114,7 @@ class QueryTestCase(unittest.TestCase):
         assert request.headers['Content-Type'] == 'application/json'
         assert request.status_code == 200
         data = json.loads(request.data.decode('utf-8'))
-        assert data[0]["Tables_in_docker"] == 'block'
+        assert len(data) == 8
 
 
 if __name__ == '__main__':
