@@ -60,7 +60,7 @@ class QueryTestCase(unittest.TestCase):
         assert request.headers['Content-Type'] == 'application/json'
         assert request.status_code == 400
         data = json.loads(request.data.decode('utf-8'))
-        self.assertIn("You have an error in your SQL syntax;", data['description'])
+        self.assertIn("You have an error in your SQL syntax;", data['error'])
 
     def test_request_error(self):
         request = self.app.post('/query',
@@ -93,7 +93,7 @@ class QueryTestCase(unittest.TestCase):
         data = json.loads(request.data.decode('utf-8'))
         print(data)
         assert request.status_code == 400
-        self.assertIn('You have an error in your SQL syntax', data['description'])
+        self.assertIn('You have an error in your SQL syntax', data['error'])
 
     def test_multiple_queries_correct_syntax(self):
         request = self.app.post('/query',
@@ -104,7 +104,17 @@ class QueryTestCase(unittest.TestCase):
         data = json.loads(request.data.decode('utf-8'))
         print(data)
         assert request.status_code == 400
-        self.assertIn('Only one query allowed!', data['description'])
+        self.assertIn('Only one query allowed!', data['error'])
+
+    def test_show_tables(self):
+        request = self.app.post('/query',
+                                data='{"sql": "show tables"}',
+                                headers={'content-type': 'application/json'}
+                                )
+        assert request.headers['Content-Type'] == 'application/json'
+        assert request.status_code == 200
+        data = json.loads(request.data.decode('utf-8'))
+        assert len(data) == 8
 
 
 if __name__ == '__main__':

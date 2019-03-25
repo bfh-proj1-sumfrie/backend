@@ -28,7 +28,7 @@ class QueryTestCase(unittest.TestCase):
         assert request.status_code == 400
         data = json.loads(request.data.decode('utf-8'))
         print(data)
-        assert data['description'] == "LIMIT's cannot be greater than 10"
+        assert data['error'] == "LIMIT's cannot be greater than 10"
 
     def test_limit_smaller_than_config(self):
         request = self.app.post('/query',
