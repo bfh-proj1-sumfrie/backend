@@ -1,8 +1,8 @@
-import re
+import re, os
 from flask_restful import abort
 
 
-def paginate_query(sql, pagesize=10):
+def paginate_query(sql, pagesize=os.environ.get('LIMIT_MAX_SIZE', 10)):
     sql = sql.lower().strip()
     sql = handle_semicolon(sql)
     limit_params_regex = re.compile('(?!limit)\d+')

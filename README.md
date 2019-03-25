@@ -22,7 +22,8 @@ It acts as a proxy for querying a MariaDB.
     DB_HOST # the host where the db is running
     DB_DATABASE # the name of the database
     DB_CHARSET # the charset (utf8 in our case)
-    API_HOST # e.g. https://myhost.com
+    API_HOST # e.g. https://myhost.com,
+    LIMIT_MAX_SIZE # the default limit for queries. default is 10.
  ```
 6) Run it: `python main.py`
 
