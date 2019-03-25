@@ -1,11 +1,13 @@
 import re
 import os
 from flask_restful import abort
+from api.sanitizer import remove_comments
 
 
 def paginate_query(sql):
     pagesize = int(os.environ.get('LIMIT_MAX_SIZE', '10'))
     sql = sql.lower().strip()
+    sql = remove_comments(sql)
     # paginate selects only!
     if sql[:6] == 'select':
         sql = handle_semicolon(sql)
