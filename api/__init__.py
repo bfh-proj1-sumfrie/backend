@@ -101,7 +101,7 @@ def create_api(is_test=False):
             try:
                 db_response = db.engine.execute(text(query))
             except SQLAlchemyError as err:
-                return abort(400, description=str(err))
+                return abort(400, error=str(err))
 
             data = json.dumps([dict(r) for r in db_response], default=alchemy_encoder)
             response = make_response(data)
