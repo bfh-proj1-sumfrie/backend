@@ -106,5 +106,6 @@ class QueryTestCase(unittest.TestCase):
         assert request.status_code == 400
         self.assertIn('Only one query allowed!', data['description'])
 
+
 if __name__ == '__main__':
     unittest.main()
