@@ -9,6 +9,7 @@ services:
             - DB_PORT=3306
             - DB_DATABASE=docker
             - DB_CHARSET=utf8
+            - LIMIT_MAX_SIZE=100
         networks:
             - backend
         ports:
