@@ -1,5 +1,5 @@
 import os
-from flask_restful import Resource, reqparse
+from flask_restful import Resource, reqparse, abort
 from flask import Flask, json, make_response
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
@@ -8,6 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 from api.database import get_db_connection_uri
 from flask_restful_swagger_2 import Api, swagger, Schema
 from flask_cors import CORS
+from api.pagination import paginate_query
 
 
 def create_api(is_test=False):
@@ -96,11 +97,11 @@ def create_api(is_test=False):
             parser = reqparse.RequestParser()
             parser.add_argument('sql', type=str, required=True, help='sql is not valid string or not present')
             args = parser.parse_args()
-
+            query = paginate_query(args['sql'])
             try:
-                db_response = db.engine.execute(text(args['sql']))
+                db_response = db.engine.execute(text(query))
             except SQLAlchemyError as err:
-                return json.jsonify({"error": str(err)})
+                return abort(400, description=str(err))
 
             data = json.dumps([dict(r) for r in db_response], default=alchemy_encoder)
             response = make_response(data)
