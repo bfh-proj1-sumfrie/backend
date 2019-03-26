@@ -65,8 +65,10 @@ class QueryTestCase(unittest.TestCase):
                                 headers={'content-type': 'application/json'}
                                 )
         assert request.headers['Content-Type'] == 'application/json'
-        assert request.status_code == 200
+        print(request)
         data = json.loads(request.data.decode('utf-8'))
+        print(data)
+        assert request.status_code == 200
         assert data[0]['id'] == 2
 
     def test_comment_out_default_limit(self):

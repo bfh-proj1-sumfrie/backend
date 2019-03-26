@@ -1,3 +1,4 @@
+import re
 from flask_restful import abort
 
 
@@ -24,5 +25,6 @@ def check_query_blacklist(sql):
         'truncate'
     ]
     for item in blacklist:
-        if item in sql.lower():
+        regex = re.compile('(?:^|\\W)' + item + '(?:$|\\W)')
+        if len(re.findall(regex, sql.lower())) > 0:
             abort(401, error="The following keyword is not allowed: " + str(item))
