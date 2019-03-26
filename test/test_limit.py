@@ -27,7 +27,6 @@ class QueryTestCase(unittest.TestCase):
         assert request.headers['Content-Type'] == 'application/json'
         assert request.status_code == 400
         data = json.loads(request.data.decode('utf-8'))
-        print(data)
         assert data['error'] == "LIMIT's cannot be greater than 10"
 
     def test_limit_smaller_than_config(self):
@@ -66,9 +65,39 @@ class QueryTestCase(unittest.TestCase):
                                 headers={'content-type': 'application/json'}
                                 )
         assert request.headers['Content-Type'] == 'application/json'
-        assert request.status_code == 200
+        print(request)
         data = json.loads(request.data.decode('utf-8'))
+        print(data)
+        assert request.status_code == 200
         assert data[0]['id'] == 2
+
+    def test_comment_out_default_limit(self):
+        request = self.app.post('/query',
+                                data='{"sql": "select * from block #"}',
+                                headers={'content-type': 'application/json'}
+                                )
+        assert request.headers['Content-Type'] == 'application/json'
+        data = json.loads(request.data.decode('utf-8'))
+        assert request.status_code == 200
+        assert len(data) == 10
+
+        request = self.app.post('/query',
+                                data='{"sql": "select * from block --"}',
+                                headers={'content-type': 'application/json'}
+                                )
+        assert request.headers['Content-Type'] == 'application/json'
+        data = json.loads(request.data.decode('utf-8'))
+        assert request.status_code == 200
+        assert len(data) == 10
+
+        request = self.app.post('/query',
+                                data='{"sql": "select * from block /*"}',
+                                headers={'content-type': 'application/json'}
+                                )
+        assert request.headers['Content-Type'] == 'application/json'
+        data = json.loads(request.data.decode('utf-8'))
+        assert request.status_code == 200
+        assert len(data) == 10
 
 
 if __name__ == '__main__':
