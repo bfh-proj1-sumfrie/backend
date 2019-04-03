@@ -57,6 +57,7 @@ To run the tests install `pip install nose` and run `nosetests`.
 
 The test need to run against an sql database. To run them, start the docker environment
 and then trigger the tests: `nosetests`.
+Make sure you installed: `nostests, `
 
 Since only reading queries are allowed, we don't need to revert the db
 on every test.
