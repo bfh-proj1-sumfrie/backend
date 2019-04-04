@@ -18,7 +18,7 @@ class QueryTestCase(unittest.TestCase):
                                 )
         assert request.headers['Content-Type'] == 'application/json'
         assert request.status_code == 200
-        data = json.loads(request.data.decode('utf-8'))
+        data = json.loads(request.data.decode('utf-8'))['data']
         assert data[0]["id"] == 1
         assert data[0]["block_hash"] == "b'AAAAALhz55eEZHpsgpYscNIoVX0kp0fqTRuLvoeOEgY='"
         assert data[0]["difficulty"] == 1.0
@@ -38,7 +38,7 @@ class QueryTestCase(unittest.TestCase):
                                 )
         assert request.headers['Content-Type'] == 'application/json'
         assert request.status_code == 200
-        data = json.loads(request.data.decode('utf-8'))
+        data = json.loads(request.data.decode('utf-8'))['data']
         assert data[0]["id"] == 1
         assert data[0]["block_hash"] == "b'AAAAALhz55eEZHpsgpYscNIoVX0kp0fqTRuLvoeOEgY='"
         assert data[0]["difficulty"] == 1.0
@@ -80,7 +80,7 @@ class QueryTestCase(unittest.TestCase):
                                 )
         assert request.headers['Content-Type'] == 'application/json'
         assert request.status_code == 200
-        data = json.loads(request.data.decode('utf-8'))
+        data = json.loads(request.data.decode('utf-8'))['data']
         assert data[0]["txid"] == 1
         assert data[0]["value"] == 50
 
@@ -113,7 +113,7 @@ class QueryTestCase(unittest.TestCase):
                                 )
         assert request.headers['Content-Type'] == 'application/json'
         assert request.status_code == 200
-        data = json.loads(request.data.decode('utf-8'))
+        data = json.loads(request.data.decode('utf-8'))['data']
         assert len(data) == 8
 
 

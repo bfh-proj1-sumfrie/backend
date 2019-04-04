@@ -49,9 +49,11 @@ class QueryTestCase(unittest.TestCase):
         assert request.headers['Content-Type'] == 'application/json'
         data = json.loads(request.data.decode('utf-8'))
         assert request.status_code == 200
-        assert len(data) == 10
-        assert data[0]['id'] == 1
-        assert data[9]['id'] == 10
+        assert len(data['data']) == 10
+        assert data['data'][0]['id'] == 1
+        assert data['data'][9]['id'] == 10
+        assert data['pagination']['page'] == 0
+        assert data['pagination']['max_pages'] == 1000
 
     def test_valid_query_with_offset(self):
         request = self.app.post('/query',
@@ -61,9 +63,9 @@ class QueryTestCase(unittest.TestCase):
         assert request.headers['Content-Type'] == 'application/json'
         data = json.loads(request.data.decode('utf-8'))
         assert request.status_code == 200
-        assert len(data) == 10
-        assert data[0]['id'] == 11
-        assert data[9]['id'] == 20
+        assert len(data['data']) == 10
+        assert data['data'][0]['id'] == 11
+        assert data['data'][9]['id'] == 20
 
     def test__query_with_large_offset(self):
         request = self.app.post('/query',
@@ -72,8 +74,8 @@ class QueryTestCase(unittest.TestCase):
                                 )
         assert request.headers['Content-Type'] == 'application/json'
         data = json.loads(request.data.decode('utf-8'))
-        assert request.status_code == 200
-        assert len(data) == 0
+        assert request.status_code == 400
+        assert data['error'] == 'This page does not exist'
 
     def test__query_with_large_page_size(self):
         request = self.app.post('/query',
