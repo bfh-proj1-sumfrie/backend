@@ -8,7 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 from api.database import get_db_connection_uri
 from flask_restful_swagger_2 import Api, swagger, Schema
 from flask_cors import CORS
-from api.pagination import paginate_query
+from api.param_validator import validate_pagesize_param
 
 
 def create_api(is_test=False):
@@ -96,14 +96,27 @@ def create_api(is_test=False):
         def post(self):
             parser = reqparse.RequestParser()
             parser.add_argument('sql', type=str, required=True, help='sql is not valid string or not present')
+            parser.add_argument('pageSize', type=int, required=True, help='pageSize param must be set in body')
+            parser.add_argument('page', type=int, required=True, help='page param must be set in body')
             args = parser.parse_args()
-            query = paginate_query(args['sql'])
+
+            validate_pagesize_param(args['pageSize'])
+            offset = args["page"] * args['pageSize']
+
             try:
-                db_response = db.engine.execute(text(query))
+                # there is no validation of the sql since this is a task for the db admins!
+                result = []
+                db_response = db.engine.execute(text(args['sql']))
+                db.engine.execution_options()
+                idx = 0
+                for entry in db_response:
+                    if offset <= idx < (offset + args['pageSize']):
+                        result.append(dict(entry))
+                    idx += 1
             except SQLAlchemyError as err:
                 return abort(400, error=str(err))
 
-            data = json.dumps([dict(r) for r in db_response], default=alchemy_encoder)
+            data = json.dumps(result, default=alchemy_encoder)
             response = make_response(data)
             response.mimetype = 'application/json'
 

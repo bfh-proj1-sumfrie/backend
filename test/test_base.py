@@ -13,7 +13,7 @@ class QueryTestCase(unittest.TestCase):
 
     def test_simple_query(self):
         request = self.app.post('/query',
-                                data='{"sql": "select * from block limit 2"}',
+                                data='{"sql": "select * from block limit 2", "page": 0, "pageSize": 10}',
                                 headers={'content-type': 'application/json'}
                                 )
         assert request.headers['Content-Type'] == 'application/json'
@@ -33,7 +33,7 @@ class QueryTestCase(unittest.TestCase):
 
     def test_simple_query_with_semicolon(self):
         request = self.app.post('/query',
-                                data='{"sql": "select * from block limit 2;"}',
+                                data='{"sql": "select * from block limit 2;", "page": 0, "pageSize": 10}',
                                 headers={'content-type': 'application/json'}
                                 )
         assert request.headers['Content-Type'] == 'application/json'
@@ -53,7 +53,7 @@ class QueryTestCase(unittest.TestCase):
 
     def test_simple_error(self):
         request = self.app.post('/query',
-                                data='{"sql": "select"}',
+                                data='{"sql": "select", "page": 0, "pageSize": 10}',
                                 headers={'content-type': 'application/json'}
                                 )
 
@@ -64,7 +64,7 @@ class QueryTestCase(unittest.TestCase):
 
     def test_request_error(self):
         request = self.app.post('/query',
-                                data='{}',
+                                data='{"page": 0, "pageSize": 10}',
                                 headers={'content-type': 'application/json'}
                                 )
 
@@ -75,7 +75,7 @@ class QueryTestCase(unittest.TestCase):
 
     def test_encoder(self):
         request = self.app.post('/query',
-                                data='{"sql": "select * from vout limit 1"}',
+                                data='{"sql": "select * from vout limit 1", "page": 0, "pageSize": 10}',
                                 headers={'content-type': 'application/json'}
                                 )
         assert request.headers['Content-Type'] == 'application/json'
@@ -86,29 +86,29 @@ class QueryTestCase(unittest.TestCase):
 
     def test_multiple_queries(self):
         request = self.app.post('/query',
-                                data='{"sql": "select * from vout limit 1; select * from block limit 10"}',
+                                data='{"sql": "select * from vout limit 1; select * from block limit 10",'
+                                     '"page": 0, "pageSize": 10}',
                                 headers={'content-type': 'application/json'}
                                 )
         assert request.headers['Content-Type'] == 'application/json'
         data = json.loads(request.data.decode('utf-8'))
-        print(data)
         assert request.status_code == 400
         self.assertIn('You have an error in your SQL syntax', data['error'])
 
     def test_multiple_queries_correct_syntax(self):
         request = self.app.post('/query',
-                                data='{"sql": "select * from vout limit 1; select * from block limit 10;"}',
+                                data='{"sql": "select * from vout limit 1; select * from block limit 10;"'
+                                     ', "page": 0, "pageSize": 10}',
                                 headers={'content-type': 'application/json'}
                                 )
         assert request.headers['Content-Type'] == 'application/json'
         data = json.loads(request.data.decode('utf-8'))
-        print(data)
         assert request.status_code == 400
-        self.assertIn('Only one query allowed!', data['error'])
+        self.assertIn('ou have an error in your SQL syntax', data['error'])
 
     def test_show_tables(self):
         request = self.app.post('/query',
-                                data='{"sql": "show tables"}',
+                                data='{"sql": "show tables", "page": 0, "pageSize": 10}',
                                 headers={'content-type': 'application/json'}
                                 )
         assert request.headers['Content-Type'] == 'application/json'

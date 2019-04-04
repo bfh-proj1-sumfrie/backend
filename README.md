@@ -23,7 +23,7 @@ It acts as a proxy for querying a MariaDB.
     DB_DATABASE # the name of the database
     DB_CHARSET # the charset (utf8 in our case)
     API_HOST # e.g. https://myhost.com,
-    LIMIT_MAX_SIZE # the default limit for queries. default is 10.
+    PAGINATION_PAGE_SIZE_MAX # you can set the max page size the clients can define. Defaults to 100.
  ```
 6) Run it: `python main.py`
 
@@ -57,6 +57,7 @@ To run the tests install `pip install nose` and run `nosetests`.
 
 The test need to run against an sql database. To run them, start the docker environment
 and then trigger the tests: `nosetests`.
+Make sure you installed: `nostests, `
 
 Since only reading queries are allowed, we don't need to revert the db
 on every test.
