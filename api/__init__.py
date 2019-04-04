@@ -1,4 +1,3 @@
-import os
 from flask_restful import Resource, reqparse, abort, Api
 from flask import Flask, json, make_response
 from sqlalchemy import text
