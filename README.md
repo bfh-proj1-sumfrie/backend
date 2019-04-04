@@ -36,15 +36,10 @@ to trigger a container rebuild
 
 When building the containers the database will automatically be populated with test data.
 
-### Swagger API Docs
-You can find the API Docs here: `http://localhost:5000/api/swagger.json`.
-If you deploy make sur to set the `API_HOST` env variable.
-If you want to test it using an a swagger interface go to: https://inspector.swagger.io
+### API Docs
+You can find the API docs in the wiki of this repository.
 
-and use the your swagger link where you host this software `http://myhost.com/api/swagger.json` 
-
-If you are developing make sure to allow CORS request, so you can use `http://127.0.0.1:5000/api/swagger.json`
-in the swagger inspector.
+https://github.com/bfh-proj1-sumfrie/backend/wiki
 
 ## CI/CD
 This project is automatically tested and linted on Travis CI.
