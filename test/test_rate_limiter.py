@@ -28,7 +28,6 @@ class SchemaTestCase(unittest.TestCase):
         # the 5 request which needs to be blocked
         request = self.app.post('/query')
         data = json.loads(request.data.decode('utf-8'))
-        print(data)
         assert request.headers['Content-Type'] == 'application/json'
         assert request.status_code == 429
         assert data['message'] == "4 per 1 day"

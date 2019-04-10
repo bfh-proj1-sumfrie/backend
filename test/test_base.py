@@ -71,7 +71,6 @@ class QueryTestCase(unittest.TestCase):
         assert request.headers['Content-Type'] == 'application/json'
         assert request.status_code == 400
         data = json.loads(request.data.decode('utf-8'))
-        print(data)
         assert data['message']["sql"] == "sql is not valid string or not present"
 
     def test_encoder(self):
