@@ -7,12 +7,19 @@ from flask_sqlalchemy import SQLAlchemy
 from api.database import get_db_connection_uri
 from flask_cors import CORS
 from api.param_validator import validate_pagesize_param
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 
 def create_api(is_test=False):
     app = Flask(__name__)
     api = Api(app, catch_all_404s=True)
     CORS(app, resources={r"/*": {"origins": "*"}})
+    Limiter(
+        app,
+        key_func=get_remote_address,
+        default_limits=["10000 per day", "500 per hour"]
+    )
 
     if is_test:
         app.config['TESTING'] = True
