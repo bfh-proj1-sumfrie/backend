@@ -66,21 +66,17 @@ def create_api(is_test=False):
 
     class SchemaResource(Resource):
         def get(self):
-            try:
-                tables = db.engine.execute(text('SHOW TABLES;'))
-                response = []
+            tables = db.engine.execute(text('SHOW TABLES;'))
+            response = []
 
-                for table in tables:
-                    columns = db.engine.execute(text('SHOW COLUMNS FROM ' + table[0] + ';'))
-                    response.append({
-                        "table_name": table[0],
-                        "columns": [dict(row) for row in columns]
-                    })
+            for table in tables:
+                columns = db.engine.execute(text('SHOW COLUMNS FROM ' + table[0] + ';'))
+                response.append({
+                    "table_name": table[0],
+                    "columns": [dict(row) for row in columns]
+                })
 
-                return response
-
-            except SQLAlchemyError as err:
-                return abort(400, message=str(err))
+            return response
 
     api.add_resource(QueryResource, '/query')
     api.add_resource(SchemaResource, '/schema')
