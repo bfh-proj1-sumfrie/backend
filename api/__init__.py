@@ -11,7 +11,7 @@ from api.param_validator import validate_pagesize_param
 
 def create_api(is_test=False):
     app = Flask(__name__)
-    api = Api(app)
+    api = Api(app, catch_all_404s=True)
     CORS(app, resources={r"/*": {"origins": "*"}})
 
     if is_test:
@@ -41,15 +41,18 @@ def create_api(is_test=False):
                 pagination['page'] = args["page"]
                 pagination['max_pages'] = int(db_response.rowcount / args['pageSize'])
 
+                if pagination['max_pages'] > 0:
+                    pagination['max_pages'] -= 1
+
                 if args["page"] > pagination['max_pages']:
-                    abort(400, error='This page does not exist')
+                    abort(400, message='This page does not exist')
 
                 for entry in db_response:
                     if offset <= idx < (offset + args['pageSize']):
                         result.append(dict(entry))
                     idx += 1
             except SQLAlchemyError as err:
-                return abort(400, error=str(err))
+                return abort(400, message=str(err))
 
             data = dict()
             data['pagination'] = pagination

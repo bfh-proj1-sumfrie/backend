@@ -60,7 +60,7 @@ class QueryTestCase(unittest.TestCase):
         assert request.headers['Content-Type'] == 'application/json'
         assert request.status_code == 400
         data = json.loads(request.data.decode('utf-8'))
-        self.assertIn("You have an error in your SQL syntax;", data['error'])
+        self.assertIn("You have an error in your SQL syntax;", data['message'])
 
     def test_request_error(self):
         request = self.app.post('/query',
@@ -71,6 +71,7 @@ class QueryTestCase(unittest.TestCase):
         assert request.headers['Content-Type'] == 'application/json'
         assert request.status_code == 400
         data = json.loads(request.data.decode('utf-8'))
+        print(data)
         assert data['message']["sql"] == "sql is not valid string or not present"
 
     def test_encoder(self):
@@ -79,8 +80,8 @@ class QueryTestCase(unittest.TestCase):
                                 headers={'content-type': 'application/json'}
                                 )
         assert request.headers['Content-Type'] == 'application/json'
-        assert request.status_code == 200
         data = json.loads(request.data.decode('utf-8'))['data']
+        assert request.status_code == 200
         assert data[0]["txid"] == 1
         assert data[0]["value"] == 50
 
@@ -93,7 +94,7 @@ class QueryTestCase(unittest.TestCase):
         assert request.headers['Content-Type'] == 'application/json'
         data = json.loads(request.data.decode('utf-8'))
         assert request.status_code == 400
-        self.assertIn('You have an error in your SQL syntax', data['error'])
+        self.assertIn('You have an error in your SQL syntax', data['message'])
 
     def test_multiple_queries_correct_syntax(self):
         request = self.app.post('/query',
@@ -104,7 +105,7 @@ class QueryTestCase(unittest.TestCase):
         assert request.headers['Content-Type'] == 'application/json'
         data = json.loads(request.data.decode('utf-8'))
         assert request.status_code == 400
-        self.assertIn('ou have an error in your SQL syntax', data['error'])
+        self.assertIn('ou have an error in your SQL syntax', data['message'])
 
     def test_show_tables(self):
         request = self.app.post('/query',
@@ -115,6 +116,14 @@ class QueryTestCase(unittest.TestCase):
         assert request.status_code == 200
         data = json.loads(request.data.decode('utf-8'))['data']
         assert len(data) == 8
+
+    def test_404(self):
+        request = self.app.get('/some-random-that-does-not-exist')
+        assert request.headers['Content-Type'] == 'application/json'
+        assert request.status_code == 404
+        data = json.loads(request.data.decode('utf-8'))
+        assert data['message'] == "The requested URL was not found on the server. If you entered the" \
+                                  " URL manually please check your spelling and try again."
 
 
 if __name__ == '__main__':
