@@ -1,3 +1,4 @@
+from os import environ
 from flask_restful import Resource, reqparse, abort, Api
 from flask import Flask, json, make_response
 from sqlalchemy import text
@@ -18,7 +19,10 @@ def create_api(is_test=False):
     Limiter(
         app,
         key_func=get_remote_address,
-        default_limits=["10000 per day", "500 per hour"]
+        default_limits=[
+            environ.get('LIMITER_PER_DAY_VAL', "10000") + " per day",
+            environ.get('LIMITER_PER_HOUR_VAL', "500") + " per hour"
+        ]
     )
 
     if is_test:
