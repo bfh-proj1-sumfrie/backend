@@ -9,7 +9,7 @@ class SchemaTestCase(unittest.TestCase):
         self.app = app.test_client()
 
     def test_valid_schema_get(self):
-        for i in range(0, 1000):
+        for i in range(0, 500):
             self.app.get('/schema')
 
         # the 1001 request which needs to be blocked
