@@ -1,3 +1,4 @@
+from os import environ
 from flask_restful import Resource, reqparse, abort, Api
 from flask import Flask, json, make_response
 from sqlalchemy import text
@@ -7,12 +8,22 @@ from flask_sqlalchemy import SQLAlchemy
 from api.database import get_db_connection_uri
 from flask_cors import CORS
 from api.param_validator import validate_pagesize_param
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 
 def create_api(is_test=False):
     app = Flask(__name__)
-    api = Api(app)
+    api = Api(app, catch_all_404s=True)
     CORS(app, resources={r"/*": {"origins": "*"}})
+    Limiter(
+        app,
+        key_func=get_remote_address,
+        default_limits=[
+            environ.get('LIMITER_PER_DAY_VAL', "10000") + " per day",
+            environ.get('LIMITER_PER_HOUR_VAL', "500") + " per hour"
+        ]
+    )
 
     if is_test:
         app.config['TESTING'] = True
@@ -41,15 +52,18 @@ def create_api(is_test=False):
                 pagination['page'] = args["page"]
                 pagination['max_pages'] = int(db_response.rowcount / args['pageSize'])
 
+                if pagination['max_pages'] > 0:
+                    pagination['max_pages'] -= 1
+
                 if args["page"] > pagination['max_pages']:
-                    abort(400, error='This page does not exist')
+                    abort(400, message='This page does not exist')
 
                 for entry in db_response:
                     if offset <= idx < (offset + args['pageSize']):
                         result.append(dict(entry))
                     idx += 1
             except SQLAlchemyError as err:
-                return abort(400, error=str(err))
+                return abort(400, message=str(err))
 
             data = dict()
             data['pagination'] = pagination
@@ -61,6 +75,21 @@ def create_api(is_test=False):
 
             return response
 
+    class SchemaResource(Resource):
+        def get(self):
+            tables = db.engine.execute(text('SHOW TABLES;'))
+            response = []
+
+            for table in tables:
+                columns = db.engine.execute(text('SHOW COLUMNS FROM ' + table[0] + ';'))
+                response.append({
+                    "table_name": table[0],
+                    "columns": [dict(row) for row in columns]
+                })
+
+            return response
+
     api.add_resource(QueryResource, '/query')
+    api.add_resource(SchemaResource, '/schema')
 
     return app

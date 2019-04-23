@@ -14,8 +14,7 @@ It acts as a proxy for querying a MariaDB.
 1) Clone this repository
 3) Change to your virtual env
 4) Install dependencies: `pip install -r requirements.txt`
-5) Database Configuration (Sql)
- The following environment variables must be set:
+5) Configuration: The following environment variables must be set
  ```bash 
     DB_USERNAME # the db username
     DB_PASSWORD # db password of the user
@@ -23,6 +22,8 @@ It acts as a proxy for querying a MariaDB.
     DB_DATABASE # the name of the database
     DB_CHARSET # the charset (utf8 in our case)
     PAGINATION_PAGE_SIZE_MAX # you can set the max page size the clients can define. Defaults to 100.
+    LIMITER_PER_DAY_VAL # Sets the request rate limit per endpoint per day. Default 10000
+    LIMITER_PER_HOUR_VAL # Sets the request rate limit per endpoint per hour. Default 500  
  ```
 6) Run it: `python main.py`
 

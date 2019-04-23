@@ -53,7 +53,7 @@ class QueryTestCase(unittest.TestCase):
         assert data['data'][0]['id'] == 1
         assert data['data'][9]['id'] == 10
         assert data['pagination']['page'] == 0
-        assert data['pagination']['max_pages'] == 1000
+        assert data['pagination']['max_pages'] == 999
 
     def test_valid_query_with_offset(self):
         request = self.app.post('/query',
@@ -75,7 +75,7 @@ class QueryTestCase(unittest.TestCase):
         assert request.headers['Content-Type'] == 'application/json'
         data = json.loads(request.data.decode('utf-8'))
         assert request.status_code == 400
-        assert data['error'] == 'This page does not exist'
+        assert data['message'] == 'This page does not exist'
 
     def test__query_with_large_page_size(self):
         request = self.app.post('/query',
@@ -85,7 +85,17 @@ class QueryTestCase(unittest.TestCase):
         assert request.headers['Content-Type'] == 'application/json'
         data = json.loads(request.data.decode('utf-8'))
         assert request.status_code == 400
-        assert data['error'] == 'The pageSize parameter cannot be greater than: 100'
+        assert data['message'] == 'The pageSize parameter cannot be greater than: 100'
+
+    def test__query_with_edge_page(self):
+        request = self.app.post('/query',
+                                data='{"sql": "select * from block", "page": 1000, "pageSize": 10}',
+                                headers={'content-type': 'application/json'}
+                                )
+        assert request.headers['Content-Type'] == 'application/json'
+        data = json.loads(request.data.decode('utf-8'))
+        assert request.status_code == 400
+        assert data['message'] == 'This page does not exist'
 
 
 if __name__ == '__main__':
