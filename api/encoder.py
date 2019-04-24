@@ -1,14 +1,15 @@
 import datetime
 import decimal
-import base64
 
 
 # JSON encoder function for SQLAlchemy special classes
 def alchemy_encoder(obj):
     if isinstance(obj, datetime.date):
         return obj.isoformat()
-    # some bytes fields need to be cast to base64 so we don't loose data while in transfer
+
+    # display binary as hex so it's human readable @todo use a faster soultion if this does not perform well enough
     if isinstance(obj, (bytes, bytearray)):
-        return str(base64.b64encode(obj))
+        return ''.join('{:02x}'.format(x) for x in obj)
+
     elif isinstance(obj, decimal.Decimal):
         return float(obj)
