@@ -24,6 +24,7 @@ It acts as a proxy for querying a MariaDB.
     PAGINATION_PAGE_SIZE_MAX # you can set the max page size the clients can define. Defaults to 100.
     LIMITER_PER_DAY_VAL # Sets the request rate limit per endpoint per day. Default 10000
     LIMITER_PER_HOUR_VAL # Sets the request rate limit per endpoint per hour. Default 500  
+    DB_QUERY_TIMEOUT # Set the databse query timeout in seconds. Default 60
  ```
 6) Run it: `python main.py`
 
