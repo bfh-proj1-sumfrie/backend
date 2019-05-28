@@ -1,3 +1,25 @@
+"""
+ Author: Elias Summermatter & Jan Friedli
+ Date: 28.05.2019
+ Licence:
+ This file is part of BloSQL.
+ BloSQL is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ BloSQL is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ You should have received a copy of the GNU General Public License
+ along with BloSQL.  If not, see <http://www.gnu.org/licenses/>.
+ Code partly adapted from:
+ - https://flask-restful.readthedocs.io/en/latest/quickstart.html#a-minimal-api
+ - https://flask-restful.readthedocs.io
+ - https://flask-cors.readthedocs.io/en/latest/
+ - https://pypi.org/project/Flask-Limiter/
+"""
+
 from os import environ
 from flask_restful import Resource, reqparse, abort, Api
 from flask import Flask, json, make_response
@@ -28,7 +50,7 @@ def create_api(is_test=False):
     if is_test:
         app.config['TESTING'] = True
     app.config['SQLALCHEMY_DATABASE_URI'] = get_db_connection_uri(is_test)
-    app.config['SQLALCHEMY_POOL_TIMEOUT'] = int(environ.get('DB_QUERY_TIMEOUT', 60))
+    app.config['SQLALCHEMY_POOL_TIMEOUT'] = int(environ.get('github', 60))
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db = SQLAlchemy(app)
 
