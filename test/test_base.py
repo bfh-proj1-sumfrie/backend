@@ -20,14 +20,14 @@ class QueryTestCase(unittest.TestCase):
         assert request.status_code == 200
         data = json.loads(request.data.decode('utf-8'))['data']
         assert data[0]["id"] == 1
-        assert data[0]["block_hash"] == "b'AAAAALhz55eEZHpsgpYscNIoVX0kp0fqTRuLvoeOEgY='"
+        assert data[0]["block_hash"] == "00000000b873e79784647a6c82962c70d228557d24a747ea4d1b8bbe878e1206"
         assert data[0]["difficulty"] == 1.0
         assert data[0]["height"] == 1
         assert data[0]["nonce"] == 1924588547
         assert data[0]["size"] == 190
         assert data[0]["version"] == 1
         assert data[0]["time"] == "2011-02-03T00:22:08"
-        assert data[0]["merkleroot"] == "b'8DFf/DhwnXCtVkfiIEg1jdN0Xzzjh0IjyAp8kvqwyLo='"
+        assert data[0]["merkleroot"] == "f0315ffc38709d70ad5647e22048358dd3745f3ce3874223c80a7c92fab0c8ba"
 
         assert data[1]["id"] == 2
 
@@ -40,15 +40,14 @@ class QueryTestCase(unittest.TestCase):
         assert request.status_code == 200
         data = json.loads(request.data.decode('utf-8'))['data']
         assert data[0]["id"] == 1
-        assert data[0]["block_hash"] == "b'AAAAALhz55eEZHpsgpYscNIoVX0kp0fqTRuLvoeOEgY='"
+        assert data[0]["block_hash"] == "00000000b873e79784647a6c82962c70d228557d24a747ea4d1b8bbe878e1206"
         assert data[0]["difficulty"] == 1.0
         assert data[0]["height"] == 1
         assert data[0]["nonce"] == 1924588547
         assert data[0]["size"] == 190
         assert data[0]["version"] == 1
         assert data[0]["time"] == "2011-02-03T00:22:08"
-        assert data[0]["merkleroot"] == "b'8DFf/DhwnXCtVkfiIEg1jdN0Xzzjh0IjyAp8kvqwyLo='"
-
+        assert data[0]["merkleroot"] == "f0315ffc38709d70ad5647e22048358dd3745f3ce3874223c80a7c92fab0c8ba"
         assert data[1]["id"] == 2
 
     def test_simple_error(self):
