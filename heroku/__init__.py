@@ -15,8 +15,8 @@
  along with BloSQL.  If not, see <http://www.gnu.org/licenses/>.
  """
 
-from api import create_api
+from api import api
 
 # only used for serving with gunicorn on heroku
 
-application = create_api()
+application = api.create_api()
