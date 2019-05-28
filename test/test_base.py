@@ -19,7 +19,7 @@
 
 import unittest
 import json
-from api import create_api
+from api.api import create_api
 
 
 class QueryTestCase(unittest.TestCase):

@@ -26,7 +26,7 @@ It acts as a proxy for querying a MariaDB.
     LIMITER_PER_HOUR_VAL # Sets the request rate limit per endpoint per hour. Default 500  
     DB_QUERY_TIMEOUT # Set the databse query timeout in seconds. Default 60
  ```
-6) Run it: `python main.py`
+6) Run it: `python -m api`
 
 ### Docker Compose Setup (preferred)
 1) Start it: `docker-compose up`
