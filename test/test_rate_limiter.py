@@ -19,7 +19,7 @@
 
 import unittest
 import json
-from api.api import create_api
+from api.api import create_app
 from os import environ
 
 
@@ -27,7 +27,7 @@ class SchemaTestCase(unittest.TestCase):
 
     def test_limit_query(self):
         environ.setdefault("LIMITER_PER_HOUR_VAL", "2")
-        app = create_api(True)
+        app = create_app(True)
         self.app = app.test_client()
 
         self.app.post('/query')
@@ -42,7 +42,7 @@ class SchemaTestCase(unittest.TestCase):
 
     def test_limit_schema(self):
         environ.setdefault("LIMITER_PER_HOUR_VAL", "2")
-        app = create_api(True)
+        app = create_app(True)
         self.app = app.test_client()
 
         self.app.get('/schema')

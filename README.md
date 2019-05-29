@@ -14,7 +14,8 @@ It acts as a proxy for querying a MariaDB.
 1) Clone this repository
 3) Change to your virtual env
 4) Install dependencies: `pip install -r requirements.txt`
-5) Configuration: The following environment variables must be set
+5) Install flask to use its cli
+6) Configuration: The following environment variables must be set
  ```bash 
     DB_USERNAME # the db username
     DB_PASSWORD # db password of the user
@@ -26,7 +27,7 @@ It acts as a proxy for querying a MariaDB.
     LIMITER_PER_HOUR_VAL # Sets the request rate limit per endpoint per hour. Default 500  
     DB_QUERY_TIMEOUT # Set the databse query timeout in seconds. Default 60
  ```
-6) Run it: `python -m api`
+6) Run it: `FLASK_APP=api.api flask run`
 
 ### Docker Compose Setup (preferred)
 1) Start it: `docker-compose up`

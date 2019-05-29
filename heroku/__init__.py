@@ -19,4 +19,4 @@ from api import api
 
 # only used for serving with gunicorn on heroku
 
-application = api.create_api()
+application = api.create_app()

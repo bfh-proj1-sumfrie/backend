@@ -19,7 +19,7 @@
 
 import unittest
 import json
-from api.api import create_api
+from api.api import create_app
 
 
 class QueryTestCase(unittest.TestCase):
@@ -27,7 +27,7 @@ class QueryTestCase(unittest.TestCase):
     # we don't need to restore the db on each test,
     # since we only allow read access...
     def setUp(self):
-        app = create_api(True)
+        app = create_app(True)
         self.app = app.test_client()
 
     def test_params_missing(self):
