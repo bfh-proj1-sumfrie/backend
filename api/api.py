@@ -34,7 +34,7 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
 
-def create_api(is_test=False):
+def create_app(is_test=False):
     app = Flask(__name__)
     api = Api(app, catch_all_404s=True)
     CORS(app, resources={r"/*": {"origins": "*"}})

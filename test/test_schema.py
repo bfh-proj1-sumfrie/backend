@@ -19,12 +19,12 @@
 
 import unittest
 import json
-from api.api import create_api
+from api.api import create_app
 
 
 class SchemaTestCase(unittest.TestCase):
     def setUp(self):
-        app = create_api(True)
+        app = create_app(True)
         self.app = app.test_client()
 
     def test_valid_schema_get(self):
